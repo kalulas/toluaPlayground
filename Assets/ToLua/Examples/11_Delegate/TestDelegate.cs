@@ -248,8 +248,9 @@ public class TestDelegate: MonoBehaviour
         {
             tips = "";
             LuaFunction func = state.GetFunction("DoClick1");
-            TestEventListener.OnClick onClick = (TestEventListener.OnClick)DelegateTraits<TestEventListener.OnClick>.Create(func);
-            listener.onClick += onClick;
+            listener.onClick += DelegateFactory.CreateDelegate(typeof(TestEventListener.OnClick), func) as TestEventListener.OnClick;
+            //TestEventListener.OnClick onClick = (TestEventListener.OnClick)DelegateTraits<TestEventListener.OnClick>.Create(func);
+            //listener.onClick += onClick;
         }        
         else if (GUI.Button(new Rect(10, 310, 120, 40), " - Click1 in C#"))
         {
