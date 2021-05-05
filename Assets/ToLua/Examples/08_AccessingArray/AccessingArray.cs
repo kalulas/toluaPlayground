@@ -20,11 +20,11 @@ public class AccessingArray : MonoBehaviour
 
                 local t = array:ToTable()                
                 
-                for i = 1, #t do
-                    print('table: '.. tostring(t[i]))
+                for i = 1, len do
+                    print('access table ' .. i .. ': ' .. tostring(t[i]))
                 end
 
-                local pos = array:BinarySearch(3)
+                print('do Binary');local pos = array:BinarySearch(3)
                 print('array BinarySearch: pos: '..pos..' value: '..array[pos])
 
                 pos = array:IndexOf(4)
@@ -52,7 +52,7 @@ public class AccessingArray : MonoBehaviour
         lua.DoString(script, "AccessingArray.cs");
         tips = "";
 
-        int[] array = { 1, 2, 3, 4, 5 };
+        int[] array = { 1,2,3,4,5 };
         func = lua.GetFunction("TestArray");
 
         func.BeginPCall();
