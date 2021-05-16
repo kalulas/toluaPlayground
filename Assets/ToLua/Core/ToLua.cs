@@ -54,7 +54,7 @@ namespace LuaInterface
         private static MethodInfo StartGettingEntries;
         private static MethodInfo EndGettingEntries;
         private static object logEntry;
-        private static FieldInfo logEntryCondition;            
+        private static FieldInfo logEntryMessage;            
 #endif
 
         static ToLua()
@@ -471,7 +471,7 @@ namespace LuaInterface
                 LogEntriesGetEntry = logEntriesType.GetMethod("GetEntryInternal", BindingFlags.Static | BindingFlags.Public);
                 Type logEntryType = unityEditorAssembly.GetType("UnityEditorInternal.LogEntry");                
 #endif                                
-                logEntryCondition = logEntryType.GetField("condition", BindingFlags.Instance | BindingFlags.Public);
+                logEntryMessage = logEntryType.GetField("message", BindingFlags.Instance | BindingFlags.Public);
                 StartGettingEntries = logEntriesType.GetMethod("StartGettingEntries", BindingFlags.Static | BindingFlags.Public);
                 EndGettingEntries = logEntriesType.GetMethod("EndGettingEntries", BindingFlags.Static | BindingFlags.Public);
                 logEntry = Activator.CreateInstance(logEntryType);
@@ -488,31 +488,31 @@ namespace LuaInterface
 #endif
             int row = (int)logListViewCurrentRow.GetValue(logListView);            
             LogEntriesGetEntry.Invoke(null, new object[] { row, logEntry });                            
-            string condition = logEntryCondition.GetValue(logEntry) as string;
+            string message = logEntryMessage.GetValue(logEntry) as string;
 #if UNITY_2017_1_OR_NEWER
             EndGettingEntries.Invoke(null, null);
 #endif
-            condition = condition.Substring(0, condition.IndexOf('\n'));
-            int index = condition.IndexOf(".lua:");            
+            message = message.Substring(0, message.IndexOf('\n'));
+            int index = message.IndexOf(".lua:");            
 
             if (index >= 0)
             {
-                int start = condition.IndexOf("[");
-                int end = condition.IndexOf("]:");
-                string _line = condition.Substring(index + 5, end - index - 5);
+                int start = message.IndexOf("[");
+                int end = message.IndexOf("]:");
+                string _line = message.Substring(index + 5, end - index - 5);
                 Int32.TryParse(_line, out line);
-                return condition.Substring(start + 1, index + 3 - start);
+                return message.Substring(start + 1, index + 3 - start);
             }
 
-            index = condition.IndexOf(".cs:");
+            index = message.IndexOf(".cs:");
 
             if (index >= 0)
             {
-                int start = condition.IndexOf("[");
-                int end = condition.IndexOf("]:");
-                string _line = condition.Substring(index + 4, end - index - 4);
+                int start = message.IndexOf("[");
+                int end = message.IndexOf("]:");
+                string _line = message.Substring(index + 4, end - index - 4);
                 Int32.TryParse(_line, out line);
-                return condition.Substring(start + 1, index + 2 - start);
+                return message.Substring(start + 1, index + 2 - start);
             }
 
             return null;
