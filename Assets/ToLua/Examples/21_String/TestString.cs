@@ -11,14 +11,17 @@ public class TestString : LuaClient
 @"           
     function Test()
         local str = System.String.New('男儿当自强')
+        print(tolua.typename(str))
         local index = str:IndexOfAny('儿自')
         print('and index is: '..index)
         local buffer = str:ToCharArray()
+        print(tolua.typename(buffer))
         print('str type is: '..type(str)..' buffer[0] is ' .. buffer[0])
         local luastr = tolua.tolstring(buffer)
         print('lua string is: '..luastr..' type is: '..type(luastr))
+        print('tolua.typename is ' .. tolua.typename(luastr))
         luastr = tolua.tolstring(str)
-        print('lua string is: '..luastr)                    
+        print('lua string is: '..luastr..' type is: '..type(luastr))                    
     end
 ";
 
