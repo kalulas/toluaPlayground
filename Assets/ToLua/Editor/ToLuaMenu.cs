@@ -1431,7 +1431,7 @@ public static class ToLuaMenu
             return string.Empty;
         }
 
-        FileStream fs = new FileStream(file, FileMode.Open);
+        FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read);
         System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
         byte[] retVal = md5.ComputeHash(fs);
         fs.Close();
