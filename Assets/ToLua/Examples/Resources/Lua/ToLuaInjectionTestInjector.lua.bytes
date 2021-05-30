@@ -146,5 +146,11 @@ ToLuaInjectionTestInjector.TestCoroutine = function()
 	-------------------------------------------------------
 end
 
+ToLuaInjectionTestInjector["Inject"] = function()
+	return function (self, param1, param2)
+		print("Lua Inject 'Inject' ")
+	end, LuaInterface.InjectType.After
+end
+
 --InjectByName("ToLuaInjectionTest", ToLuaInjectionTestInjector)
 InjectByModule(ToLuaInjectionTest, ToLuaInjectionTestInjector)

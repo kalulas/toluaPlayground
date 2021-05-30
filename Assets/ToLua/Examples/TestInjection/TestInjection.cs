@@ -68,7 +68,7 @@ public class TestInjection : MonoBehaviour
 
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
-            for (int i = 0; i < 10000000; ++i)
+            for (int i = 0; i < 10; ++i)
             {
                 test.NoInject(true, 1);
             }
@@ -76,7 +76,7 @@ public class TestInjection : MonoBehaviour
             long noInjectMethodCostTime = sw.ElapsedMilliseconds;
             sw.Reset();
             sw.Start();
-            for (int i = 0; i < 10000000; ++i)
+            for (int i = 0; i < 10; ++i)
             {
                 test.Inject(true, 1);
             }
